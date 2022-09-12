@@ -25,7 +25,6 @@ public class ComplianceApiTests {
         bankService = new BankService(repository, complianceApi);
     }
 
-
     @Test
     public void testDepositAllowed(){
         var account = new BankAccount("1de7d918-badf-412b-893d-0c0aa1ee16e7", 123456, 123, 0);
@@ -36,6 +35,16 @@ public class ComplianceApiTests {
         assertTrue(result.getBankAccount().isPresent());
     }
 
+    @Test
+    public void testWithdrawAllowed(){
+        var account = new BankAccount("1de7d918-badf-412b-893d-0c0aa1ee16e7", 123456, 123, 0);
+        account.deposit(1000);
+
+        var result = bankService.withdraw(account, 100);
+
+        assertEquals(200, result.getStatusCode());
+        assertTrue(result.getBankAccount().isPresent());
+    }
 
     @Test
     public void testDepositNotAllowed(){
@@ -47,7 +56,6 @@ public class ComplianceApiTests {
         assertEquals("THIS ACCOUNT CAN'T DEPOSIT: THE COMPLIANCE NOT ALLOWED THIS TRANSACTION!", result.getMessages()[0]);
     }
 
-
     @Test
     public void testDepositException(){
         var account = new BankAccount("79d8c19c-316e-496c-b280-9aed815f6cb2", 123456, 123, 0);
@@ -57,5 +65,4 @@ public class ComplianceApiTests {
         assertEquals(500, result.getStatusCode());
         assertEquals("THIS ACCOUNT CAN'T DEPOSIT: CONNECTION FAILED!", result.getMessages()[0]);
     }
-
 }
