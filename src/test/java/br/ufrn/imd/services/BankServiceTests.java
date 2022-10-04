@@ -52,7 +52,7 @@ public class BankServiceTests {
         // Verify
         verify(repository).update(any(BankAccount.class));
     }
-
+/*
     @Test
     public void testWithdraw(){
         var account = repository.get(UUID.randomUUID().toString());
@@ -66,7 +66,7 @@ public class BankServiceTests {
         // Verify
         verify(repository).update(any(BankAccount.class));
     }
-
+*/
     @Test
     public void testDepositException(){
         var account = repository.get(UUID.randomUUID().toString());
